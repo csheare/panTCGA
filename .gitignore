@@ -1,1 +1,8 @@
+# genetic data
+*.npy
 
+# specific data
+sample_class_list.txt
+panTCGA_tumor_count_v1.json
+panTCGA-GEM.readme.v2-20180207 
+panTCGA-FPKM-GEM.txt
