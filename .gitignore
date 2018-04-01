@@ -1,8 +1,13 @@
-# genetic data
-*.npy
-
 # specific data
+ensembles_to_hallmark_id.json
+gene_list_panTCGA.json
+hallmark_id_to_ensembles.json
+panTCGA_gct_data_float_v1.npy
 sample_class_list.txt
-panTCGA_tumor_count_v1.json
-panTCGA-GEM.readme.v2-20180207 
+gene_list_panTCGA.npy
 panTCGA-FPKM-GEM.txt
+panTCGA_tumor_count_v1.json
+gene_dict.json
+hallmark_gene_counts.json
+panTCGA-GEM.readme.v2-20180207
+allfiles.tar
