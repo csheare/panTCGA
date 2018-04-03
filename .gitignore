@@ -1,7 +1,5 @@
 # specific data
-ensembles_to_hallmark_id.json
 gene_list_panTCGA.json
-hallmark_id_to_ensembles.json
 panTCGA_gct_data_float_v1.npy
 sample_class_list.txt
 gene_list_panTCGA.npy
