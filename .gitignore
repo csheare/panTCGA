@@ -5,7 +5,6 @@ sample_class_list.txt
 gene_list_panTCGA.npy
 panTCGA-FPKM-GEM.txt
 panTCGA_tumor_count_v1.json
-gene_dict.json
 hallmark_gene_counts.json
 panTCGA-GEM.readme.v2-20180207
 allfiles.tar

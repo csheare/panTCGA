@@ -28,3 +28,27 @@ genes_sample_swap.py
 example use:  python genes_sample_swap.py --pathway "dna_repair.json" --output "dna_repair_bysample.json"
 
 '''
+
+
+#This function will swap the axis and return the new dictionary
+def swapAxis(pathway):
+    new_dict ={}
+    return new_dict
+
+
+def addSampleLabels(dict):
+    #get labels
+    #add labels to column of dictionary
+    return dict
+
+
+
+if __name__ == '__main__':
+
+    parser = argparse.ArgumentParser(description='Get Specific Pathway Matrix')
+    parser.add_argument('--pathway', help='pathway name', type=str, required=True)
+    parser.add_argument('--output', help='output file name', type=str, required=True)
+
+    args = parser.parse_args()
+
+    dictionary = addSampleLabels(swapAxis(pathway))
