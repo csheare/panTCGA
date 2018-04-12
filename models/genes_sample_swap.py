@@ -24,6 +24,7 @@ genes_sample_swap.py
 import numpy as np
 import json
 import sys, argparse
+import collections
 
 #This function will swap the axis and return the new dictionary
 # Step 1
@@ -31,22 +32,17 @@ def swap_axis(old_file):
     with open("../data/pathways/"+str(old_file),'r') as f:
         old_dict = json.load(f)
 
-    #convert old json to matrix for ease of transpose
-    old_matrix =  np.zeros([len(old_dict),11102])## Hard Code for our data
-    i = 0
-    for key, value in old_dict.items():
-        old_matrix[i] = old_dict[key]
-        i = i + 1
+    old_matrix = np.array([old_dict[i] for i in old_dict.keys()])
 
     new_matrix = np.transpose(old_matrix)
 
     return new_matrix
 
-
 #Step 2
 def add_sample_labels(new_matrix):
     temp = open("../data/sample_class_list.txt","r")
     temp = temp.readlines()
+
     for i in range(len(temp)):
         temp[i] = temp[i].split("\t")[1]
         temp[i] = temp[i].replace("\n","")
