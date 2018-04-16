@@ -31,21 +31,7 @@ def swap_axis(old_file):
 
     old_matrix = np.array([old_dict[i] for i in old_dict.keys()])
 
-    # file1 = open('old_matrix.csv',"w+")
-    # csv_file = csv.writer(file1)
-    # for i in range(len(old_matrix)):
-    #     csv_file.writerow(old_matrix[i])
-    #
-    # file1.close()
-    #
     new_matrix = old_matrix.T
-    #
-    # file2 = open('new_matrix.csv',"w+")
-    # csv_file = csv.writer(file2)
-    # for i in range(len(new_matrix)):
-    #     csv_file.writerow(new_matrix[i])
-    #
-    # file2.close()
 
     return new_matrix
 

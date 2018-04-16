@@ -33,12 +33,6 @@ def knn_classify(matrix):
     full_data = pd.DataFrame(matrix)
     full_data = full_data.rename(columns={matrix.shape[1]-1: "TARGET CLASS"})
     print(full_data.shape)
-    #full_data.to_csv('full_data.csv')
-
-    # #scale the data for X
-    # scaler = StandardScaler()
-    # scaler.fit(full_data.drop("TARGET CLASS", axis=1))
-    # scaled_features = scaler.transform(full_data.drop("TARGET CLASS", axis=1))
 
     X = np.asarray(full_data)[:,:-1]
     print(X.shape)
