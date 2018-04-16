@@ -15,17 +15,15 @@ from sklearn.decomposition import PCA
 
 
 '''
-        The program expects a directory path that contains the following formated files:
+        The program converts the json to appropriate form via the functions in genes_sample_swap,
+        Then it performs PCA and KNN on the data
 
-        pathway : <pathway name>
-        output  : <output file name *must be numpy array>
 
-        Note: This is to prepare the data for two types of analysis: clustering and classification
-
-        example use:  python nn.py --data "dna_repair.json"
+        example use:  python knn.py --data "dna_repair.json"
 
 
 '''
+import csv
 
 # TODO:
 
@@ -34,33 +32,45 @@ from sklearn.decomposition import PCA
 def knn_classify(matrix):
     full_data = pd.DataFrame(matrix)
     full_data = full_data.rename(columns={matrix.shape[1]-1: "TARGET CLASS"})
+    print(full_data.shape)
+    #full_data.to_csv('full_data.csv')
 
-    #scale the data for X
-    scaler = StandardScaler()
-    scaler.fit(full_data.drop("TARGET CLASS", axis=1))
-    scaled_features = scaler.transform(full_data.drop("TARGET CLASS", axis=1))
+    # #scale the data for X
+    # scaler = StandardScaler()
+    # scaler.fit(full_data.drop("TARGET CLASS", axis=1))
+    # scaled_features = scaler.transform(full_data.drop("TARGET CLASS", axis=1))
 
-    X = full_data.drop("TARGET CLASS", axis=1)#pd.DataFrame(scaled_features,columns=full_data.columns[:-1])
-    y= full_data["TARGET CLASS"]
+    X = np.asarray(full_data)[:,:-1]
+    print(X.shape)
+    y = np.asarray(full_data["TARGET CLASS"])
+
+    print(X.shape)
+    print(y.shape)
+
+    print(X)
 
     #Train the Model
     X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2)
 
-    #Principle Component Analysis
-    pca = PCA(n_components=20)
-    pca_result_x_train = pca.fit_transform(X_train)
-    pca_result_x_test = pca.transform(X_test)#
 
-    plt.scatter(pca_result_x_train[:4000, 0], pca_result_x_train[:4000, 1])#, c=y_train[:4000], edgecolor='none', alpha=0.5,
+    #Principle Component Analysis
+    # pca = PCA(n_components=2)
+    # pca_result_x_train = pca.fit_transform(X_train)
+    # pca_result_x_test = pca.transform(X_test)#
+
+    # plt.scatter(pca_result_x_train[:, 0], pca_result_x_train[:, 1], edgecolor='none', alpha=0.5)
+    # plt.show()
+
+    #plt.scatter(pca_result_x_train[:4000, 0], pca_result_x_train[:4000, 1])#, c=y_train[:4000], edgecolor='none', alpha=0.5,
     # #        cmap=plt.get_cmap('jet', 10), s=5)
     # # plt.colorbar()
-    plt.show()
+    #plt.show()
 
     #KNN
-    knn = KNeighborsClassifier(n_neighbors=50)
-    knn.fit(pca_result_x_train,y_train)
-    pred = knn.predict(pca_result_x_test)
+    knn = KNeighborsClassifier(n_neighbors=3)
+    knn.fit(X_train,y_train)
+    pred = knn.predict(X_test)
     #print(confusion_matrix(y_test,pred))
     #print(classification_report(y_test,pred))
 
@@ -91,9 +101,6 @@ def knn_classify(matrix):
     #Compute error_rate
 
     print(accuracy_score(pred,y_test.tolist()))
-
-
-
 
 if __name__ == '__main__':
 
