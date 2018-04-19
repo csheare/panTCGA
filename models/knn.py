@@ -49,12 +49,12 @@ def knn_classify(matrix):
 
 
     #Principle Component Analysis
-    # pca = PCA(n_components=2)
-    # pca_result_x_train = pca.fit_transform(X_train)
-    # pca_result_x_test = pca.transform(X_test)#
+    pca = PCA(n_components=6)
+    pca_result_x_train = pca.fit_transform(X_train)
+    pca_result_x_test = pca.transform(X_test)#
 
-    # plt.scatter(pca_result_x_train[:, 0], pca_result_x_train[:, 1], edgecolor='none', alpha=0.5)
-    # plt.show()
+    plt.scatter(pca_result_x_train[:, 0], pca_result_x_train[:, 1], edgecolor='none', alpha=0.5)
+    plt.show()
 
     #plt.scatter(pca_result_x_train[:4000, 0], pca_result_x_train[:4000, 1])#, c=y_train[:4000], edgecolor='none', alpha=0.5,
     # #        cmap=plt.get_cmap('jet', 10), s=5)
@@ -62,7 +62,7 @@ def knn_classify(matrix):
     #plt.show()
 
     #KNN
-    knn = KNeighborsClassifier(n_neighbors=3)
+    knn = KNeighborsClassifier(n_neighbors=20)
     knn.fit(X_train,y_train)
     pred = knn.predict(X_test)
     #print(confusion_matrix(y_test,pred))
