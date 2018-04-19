@@ -35,6 +35,17 @@ def swap_axis(old_file):
 
     return new_matrix
 
+def swap_the_big_ol_matrix():
+
+    matrix = np.load("../data/panTCGA_gct_data_float_v1.npy")
+
+    new_matrix = matrix.T
+
+    return new_matrix
+
+def get_the_big_ol_matrix():
+
+    return np.load("../data/panTCGA_gct_data_float_v1.npy")
 
 def add_sample_labels(new_matrix):
     temp = open("../data/sample_class_list.txt","r")
