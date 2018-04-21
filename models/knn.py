@@ -27,7 +27,6 @@ import csv
 
 # TODO:
 
-#knn = KNeighborsClassifier())
 
 def knn_classify(matrix):
     full_data = pd.DataFrame(matrix)
@@ -41,7 +40,7 @@ def knn_classify(matrix):
     print(X.shape)
     print(y.shape)
 
-    print(X)
+    print((X.shape)[1])
 
     #Train the Model
     X_train, X_test, y_train, y_test = train_test_split(
@@ -53,34 +52,44 @@ def knn_classify(matrix):
     pca_result_x_train = pca.fit_transform(X_train)
     pca_result_x_test = pca.transform(X_test)#
 
-    plt.scatter(pca_result_x_train[:, 0], pca_result_x_train[:, 1], edgecolor='none', alpha=0.5)
-    plt.show()
+    #Use this to Find Optimal Number of Components (components by varaince)
+    variance = []
+    for i in range(1 ,(X.shape)[1]+1):
 
-    #plt.scatter(pca_result_x_train[:4000, 0], pca_result_x_train[:4000, 1])#, c=y_train[:4000], edgecolor='none', alpha=0.5,
-    # #        cmap=plt.get_cmap('jet', 10), s=5)
-    # # plt.colorbar()
-    #plt.show()
+        pca = PCA(n_components=i)
+        pca_result_x_train = pca.fit_transform(X_train)
+        variance.append(pca.explained_variance_[i-1])
+
+    print(variance)
+    print(range(1,(X.shape)[1]+1))
+    plt.figure(figsize=(10,6))
+    plt.plot(range(1,(X.shape)[1]+1),variance, color='blue',linestyle='dashed', marker='o', markerfacecolor='red', markersize=10)
+    plt.title("Varaince v Number Components")
+    plt.xlabel("Number of Components")
+    plt.ylabel("Variance")
+    savefig('test.png')
+
+    # print(len(pca.explained_variance_))
+    # print(len( pca.components_))
+
+    # plt.plot(pca.explained_variance_ ,pca.components_, color='blue',linestyle='dashed', marker='o', markerfacecolor='red', markersize=10)
+    # plt.show()
+
 
     #KNN
-    knn = KNeighborsClassifier(n_neighbors=20)
-    knn.fit(X_train,y_train)
-    pred = knn.predict(X_test)
+    # knn = KNeighborsClassifier(n_neighbors=20)
+    # knn.fit(X_train,y_train)
+    # pred = knn.predict(X_test)
+
+    #Confusion Matrix
     #print(confusion_matrix(y_test,pred))
-    #print(classification_report(y_test,pred))
-
-    # for i in range(len(pred)):
-    #     print(str(pred[i]) + " : " + str(y_test.tolist()[i]))
-    #print(pred)
-    #print(y_test.tolist())
-    #print(knn.score(pred,y_test.tolist()))
-
 
     #K folds cross validation
     #Use this to Find Optimal K Value
-    #error_rate = []
+    # error_rate = []
     # for i in range(1,10):
     #
-    #     knn =KNeighborsClassifier(n_neighbors=i)
+    #     knn = KNeighborsClassifier(n_neighbors=i)
     #     knn.fit(X_train,y_train)
     #     pred_i = knn.predict(X_test)
     #     error_rate.append(np.mean(pred_i != y_test))
@@ -90,11 +99,11 @@ def knn_classify(matrix):
     # plt.title("Error Rate v K Value")
     # plt.xlabel("K")
     # plt.ylabel("Error Rate")
-    #plt.show()
-
-    #Compute error_rate
-
-    print(accuracy_score(pred,y_test.tolist()))
+    # plt.show()
+    #
+    # #Compute error_rate
+    #
+    # print(accuracy_score(pred,y_test.tolist()))
 
 if __name__ == '__main__':
 
