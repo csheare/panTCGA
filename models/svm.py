@@ -22,7 +22,7 @@ from sklearn.decomposition import PCA
 
 '''
 
-def svm_classify(matrix):
+def svm_classify(matrix,num_components):
 
     #Data Prep
     full_data = pd.DataFrame(matrix)
@@ -39,23 +39,23 @@ def svm_classify(matrix):
     print("Making Model...")
     model = svm.SVC(kernel="linear", C=1, gamma=1)
 
-    # #pca
-    # pca = PCA(n_components=2)
-    # pca_result_x_train = pca.fit_transform(X_train)
-    # pca_result_x_test = pca.transform(X_test)
+    #pca
+    pca = PCA(n_components=int(num_components))
+    pca_result_x_train = pca.fit_transform(X_train)
+    pca_result_x_test = pca.transform(X_test)
     #
-    # #Fit Model
-    # model.fit(pca_result_x_train,y_train)
-    # pred = model.predict(pca_result_x_test)
+    #Fit Model
+    model.fit(pca_result_x_train,y_train)
+    pred = model.predict(pca_result_x_test)
 
-    #Train Model
-
-    print("Fitting Model...")
-    model.fit(X_train, y_train)
-
-    #Predict Output
-    print("Predicting Model...")
-    pred= model.predict(X_test)
+    # #Train Model
+    #
+    # print("Fitting Model...")
+    # model.fit(X_train, y_train)
+    #
+    # #Predict Output
+    # print("Predicting Model...")
+    # pred= model.predict(X_test)
     print(accuracy_score(pred,y_test.tolist()))
 
 
@@ -64,8 +64,10 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description='Get Specific Pathway Matrix')
     parser.add_argument('--data', help='data file name', type=str, required=True)
+    parser.add_argument('--Component', help='optimal Component', type=str, required=True)
 
     args = parser.parse_args()
 
+    print("Processing ..." + str(args.data))
     matrix_with_labels = add_sample_labels(swap_axis(args.data))
-    svm_classify(matrix_with_labels)
+    svm_classify(matrix_with_labels,args.Component)
