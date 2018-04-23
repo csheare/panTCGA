@@ -43,7 +43,6 @@ def convertGenes(gene_list):
     return converted_genes
 
 #returns a list of the genes in the pathway in ensemble format
-# step 1
 def getPathwayGenes(pathway):
     with open("../data/gene_dict.json", 'r') as f:
         gene_dict = json.load(f)
@@ -67,9 +66,11 @@ def getSubMatrix(pathway,ofile):
                 del samples_per_gene[gid]
                 continue
             else:
+                print(gid)
                 break
-    with open("../data/pathways/" + str(ofile), 'w') as f:
-        json.dump(samples_per_gene,f)
+
+    # with open("../data/pathways/" + str(ofile), 'w') as f:
+    #     json.dump(samples_per_gene,f)
     #write samples_per_gene to ofile
 
 
