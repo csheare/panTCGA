@@ -16,29 +16,37 @@ genes_sample_swap.py
                 Sample2  |  ##     ##       ##          ACA
                 Sample3  |  ##     ##       ##          ACA
 
-
-
-
 '''
 
 import numpy as np
 import json
 import sys, argparse
 import collections
+import csv
 
 #This function will swap the axis and return the new dictionary
-# Step 1
 def swap_axis(old_file):
     with open("../data/pathways/"+str(old_file),'r') as f:
         old_dict = json.load(f)
 
     old_matrix = np.array([old_dict[i] for i in old_dict.keys()])
 
-    new_matrix = np.transpose(old_matrix)
+    new_matrix = old_matrix.T
 
     return new_matrix
 
-#Step 2
+def swap_the_big_ol_matrix():
+
+    matrix = np.load("../data/panTCGA_gct_data_float_v1.npy")
+
+    new_matrix = matrix.T
+
+    return new_matrix
+
+def get_the_big_ol_matrix():
+
+    return np.load("../data/panTCGA_gct_data_float_v1.npy")
+
 def add_sample_labels(new_matrix):
     temp = open("../data/sample_class_list.txt","r")
     temp = temp.readlines()
@@ -49,21 +57,6 @@ def add_sample_labels(new_matrix):
 
     array = np.asarray(temp)
 
-    matrix_with_labels = np.column_stack((new_matrix,array))
+    matrix_with_labels = np.column_stack((new_matrix,sorted(array)))
 
     return matrix_with_labels
-
-
-
-# if __name__ == '__main__':
-#
-#     parser = argparse.ArgumentParser(description='Get Specific Pathway Matrix')
-#     parser.add_argument('--old_file', help='pathway name', type=str, required=True)
-#     parser.add_argument('--new_file', help='output file name', type=str, required=True)
-#
-#     args = parser.parse_args()
-#
-#     matrix_with_labels = addSampleLabels(swapAxis(args.old_file))
-#
-#     outputFile = open("../data/cleaned/"+ str(args.new_file),"wb")
-#     np.save(outputFile,matrix_with_labels);
