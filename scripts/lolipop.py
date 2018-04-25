@@ -23,13 +23,13 @@ my_range=range(1,len(df.index)+1)
 # I load the seaborn library only to benefit the nice looking feature
 import seaborn as sns
 plt.hlines(y=my_range, xmin=ordered_df['Support Vector Machine Classification Rate'], xmax=ordered_df['K-Nearest Neighbors Classification Rate'], color='grey', alpha=0.4)
-plt.scatter(ordered_df['Support Vector Machine Classification Rate'], my_range, color='skyblue', alpha=1, label='Support Vector Machine Classification Rate')
-plt.scatter(ordered_df['K-Nearest Neighbors Classification Rate'], my_range, color='green', alpha=0.4 , label='K-Nearest Neighbors Classification Rate')
+plt.scatter(ordered_df['Support Vector Machine Classification Rate'], my_range, color='#518AAD', alpha=1, label='Support Vector Machine Classification Rate')
+plt.scatter(ordered_df['K-Nearest Neighbors Classification Rate'], my_range, color='#e59152', alpha=1 , label='K-Nearest Neighbors Classification Rate')
 plt.legend()
  
 # Add title and axis names
 plt.yticks(my_range, new_pathways)
-plt.title("Comparison of the value 1 and the value 2", loc='left')
+plt.title("Comparison of the value 1 and the value 2", loc='center')
 plt.xlabel('Classification Accuracy')
 plt.ylabel('Signaling Pathways')
 
