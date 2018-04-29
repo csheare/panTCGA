@@ -32,9 +32,14 @@ def knn_classify(matrix,k_val,component_val,output):
     full_data = pd.DataFrame(matrix)
     full_data = full_data.rename(columns={matrix.shape[1]-1: "TARGET CLASS"})
 
+    #Scale the Datas
+    scaler = StandardScaler()
+    scaler.fit(full_data.drop("TARGET CLASS", axis=1))
+    scaled_features = scaler.transform(full_data.drop("TARGET CLASS", axis=1))
+    df_feat = pd.DataFrame(scaled_features,columns=full_data.columns[:-1])
 
-    X = np.asarray(full_data)[:,:-1]
-    y = np.asarray(full_data["TARGET CLASS"])
+    X=df_feat
+    y= full_data["TARGET CLASS"]
 
 
     #Train the Model
@@ -43,26 +48,25 @@ def knn_classify(matrix,k_val,component_val,output):
 
 
     #Principle Component Analysis
-    pca = PCA(n_components=int(component_val))
-    pca_result_x_train = pca.fit_transform(X_train)
-    pca_result_x_test = pca.transform(X_test)
+    # pca = PCA(n_components=int(component_val))
+    # pca_result_x_train = pca.fit_transform(X_train)
+    # pca_result_x_test = pca.transform(X_test)
 
     #Use this to Find Optimal Number of Components (components by varaince)
-    # pca = PCA(n_components=(X.shape)[1])
-    # pca_result_x_train = pca.fit_transform(X_train)
-    #variance.append(pca.explained_variance_[i-1])
+    pca = PCA(n_components=(X.shape)[1])
+    pca_result_x_train = pca.fit_transform(X_train)
 
-    # plt.figure(figsize=(10,6))
-    # plt.plot(range(0,(X.shape)[1]),pca.explained_variance_, color='blue',linestyle='dashed', marker='o', markerfacecolor='red', markersize=10)
-    # plt.title("Varaince v Number Components")
-    # plt.xlabel("Number of Components")
-    # plt.ylabel("Variance")
-    # plt.savefig(output)
+    plt.figure(figsize=(10,6))
+    plt.plot(range(0,50),pca.explained_variance_[:50], color='blue',linestyle='dashed', marker='o', markerfacecolor='red', markersize=4)
+    plt.title("Full Data Component Analysis")
+    plt.xlabel("Number of Components")
+    plt.ylabel("Variance")
+    plt.savefig(output)
 
     #KNN
-    knn = KNeighborsClassifier(n_neighbors=int(k_val))
-    knn.fit(X_train,y_train)
-    pred = knn.predict(X_test)
+    # knn = KNeighborsClassifier(n_neighbors=int(k_val))
+    # knn.fit(X_train,y_train)
+    # pred = knn.predict(X_test)
 
     #Confusion Matrix
     #print(confusion_matrix(y_test,pred))
@@ -93,11 +97,11 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Get Specific Pathway Matrix')
     parser.add_argument('--data', help='data file name', type=str, required=True)
     parser.add_argument('--output', help='data file name', type=str, required=False)
-    parser.add_argument('--K', help='optimal K value', type=str, required=True)
-    parser.add_argument('--Component', help='optimal Component', type=str, required=True)
+    #parser.add_argument('--K', help='optimal K value', type=str, required=True)
+    #parser.add_argument('--Component', help='optimal Component', type=str, required=True)
 
     args = parser.parse_args()
     print("Processing ..." + str(args.data))
-    matrix_with_labels = add_sample_labels(swap_axis(args.data))
-    knn_classify(matrix_with_labels,args.K,args.Component,args.output)
-    #knn_classify(swap_the_big_ol_matrix(),args.output)
+    #matrix_with_labels = add_sample_labels(swap_axis(args.data))
+    #knn_classify(matrix_with_labels,args.K,args.Component,args.output)
+    knn_classify(swap_the_big_ol_matrix(),0,0,args.output)

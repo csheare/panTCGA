@@ -42,7 +42,7 @@ def runAllSVM():
             filename = filename[0:(len(filename) - 5)]
             newFile.write(filename + "\n")
             CK_tuple = getComponentandKval("../data/final.csv",filename)
-            os.system('python ../models/svm.py --data ' + str(file) + ' --Component ' + str(CK_tuple[0]))
+            os.system('python ../models/svm.py --data ' + str(file) + ' --comp ' + str(CK_tuple[0]))
 
     newFile.close()
 

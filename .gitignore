@@ -8,3 +8,6 @@ panTCGA_tumor_count_v1.json
 hallmark_gene_counts.json
 panTCGA-GEM.readme.v2-20180207
 allfiles.tar
+
+#files
+*.csv

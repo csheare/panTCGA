@@ -12,6 +12,7 @@ from sklearn.decomposition import PCA
 from sklearn.cluster import KMeans
 from sklearn.datasets import make_blobs
 from mpl_toolkits.mplot3d import Axes3D
+from sklearn.manifold import TSNE
 
 
 def kmeans(matrix):
@@ -21,11 +22,11 @@ def kmeans(matrix):
     X = np.asarray(full_data)[:,:-1]
 
     #Perform PCA
-    pca = PCA(n_components=40)
+    pca = TSNE(n_components=15)
     X = pca.fit_transform(X)
 
     # Number of clusters
-    kmeans = KMeans(n_clusters=30)
+    kmeans = KMeans(n_clusters=33)
 
     kmeans = kmeans.fit(X)
 
@@ -52,7 +53,7 @@ def kmeans(matrix):
     plt.scatter(X[:, 0], X[:, 1], c=y_kmeans, s=50, cmap='viridis')
 
 
-    plt.scatter(centers[:, 0], centers[:, 21], c='black', s=200, alpha=0.5)
+    plt.scatter(centers[:, 0], centers[:, 1], c='black', s=200, alpha=0.5)
 
     plt.show()
 
@@ -65,7 +66,7 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    #kmeans(swap_the_big_ol_matrix())
+    kmeans(swap_the_big_ol_matrix())
     #kmeans(get_the_big_ol_matrix())
-    matrix_with_labels = add_sample_labels(swap_axis(args.data))
-    kmeans(matrix_with_labels)
+    #matrix_with_labels = add_sample_labels(swap_axis(args.data))
+    #kmeans(matrix_with_labels)
